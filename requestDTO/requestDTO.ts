@@ -20,3 +20,4 @@ export const questionDTO = t.Object({
     title : t.String(),
     content : t.String(),
 })
+
