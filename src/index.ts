@@ -21,7 +21,6 @@ const app = new Elysia()
                 await db.user.create({
                     data : { userid, password, nickname, status : 'Y', }
                 })
-
                 return { result : true };
             }, {
                 body : userDTO,
