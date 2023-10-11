@@ -1,1 +1,25 @@
+name: Bun Runtime with Elysia
 
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: execute remote ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host : ${{ secrets.WAS_HOST }}
+          username : ${{ secrets.WAS_ID }}
+          key : ${{ secrets.PRIVATE_KEY }}
+          port : ${{ secrets.SSH_PORT }}
+  
