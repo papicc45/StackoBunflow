@@ -18,9 +18,11 @@ model User {
     password String
     nickname String
     createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
     answer Answer[]
     comment Comment[]
     question Question[]
+    recommended Recommended[]
     status String
     @@unique([id, userid])
 }
@@ -31,23 +33,45 @@ model Question {
     content String @db.Text
     count Int @default(0)
     user User @relation(fields : [userId], references : [id])
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
     userId Int
+    answer Answer[]
+    comment Comment[]
     @@index([userId])
 }
 
 model Comment {
     id Int @id @default(autoincrement())
     content String @db.Text
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
     user User @relation(fields : [userId], references : [id])
     userId Int
-    @@index([userId])
+    question Question @relation(fields: [questionId], references: [id])
+    questionId Int
+    @@index([userId, questionId])
 }
 
 model Answer {
     id Int @id @default(autoincrement())
     content String @db.Text
     recommend Int @default(0)
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
     user User @relation(fields : [userId], references : [id])
     userId Int
-    @@index([userId])
+    question Question @relation(fields : [questionId], references: [id])
+    questionId Int
+    recommended Recommended[]
+    @@index([userId, questionId])
+}
+
+model Recommended {
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+    answer Answer @relation(fields: [answerId], references: [id])
+    answerId Int @unique
+    @@index([userId, answerId])
+
 }

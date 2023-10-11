@@ -21,3 +21,11 @@ export const questionDTO = t.Object({
     content : t.String(),
 })
 
+export const commentDTO = t.Object({
+    content : t.String(),
+    questionId : t.Integer(),
+})
+export const answerDTO = t.Object({
+    content : t.String(),
+    questionId : t.Integer(),
+})

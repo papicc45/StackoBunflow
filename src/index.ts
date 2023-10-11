@@ -2,10 +2,10 @@ import { Elysia, t } from "elysia";
 import {PrismaClient, User} from "@prisma/client";
 import {jwt, JWTPayloadSpec} from '@elysiajs/jwt';
 import { cookie } from '@elysiajs/cookie';
-import {userDTO, jwtUserDTO, updateUserDTO, questionDTO} from '../requestDTO/requestDTO';
+import {userDTO, jwtUserDTO, updateUserDTO, questionDTO, commentDTO, answerDTO} from '../requestDTO/requestDTO';
 
 const client = new PrismaClient();
-const setup = (app : Elysia ) => app.decorate('db', client);
+const setup = ( app : Elysia ) => app.decorate('db', client);
 
 const app = new Elysia()
     .use(setup)
@@ -63,7 +63,7 @@ const app = new Elysia()
             }, {
                 body : updateUserDTO
             })
-            //회원정보 삭제
+            //회원정보 삭제(프론트 만들고 쿠키 확인)
             .delete('/delete', async ({ db, jwt, cookie : { auth }, removeCookie })=> {
                 const obj = await jwt.verify(auth);
 
@@ -75,10 +75,21 @@ const app = new Elysia()
                     })
 
                     if(updateStatus != null) {
-                        removeCookie('auth');
+                        removeCookie(auth);
                         return { result : true };
                     }
                     else return { result : false };
+                }
+            })
+            //로그아웃
+            .post('/logout', ({ jwt, cookie : { auth }, removeCookie })=> {
+                const obj = jwt.verify(auth);
+
+                if(!obj) {
+                    return { result : false };
+                } else {
+                    removeCookie('auth');
+                    return { result : true };
                 }
             })
     })
@@ -98,7 +109,6 @@ const app = new Elysia()
                     })
                     return { result : true, question };
                 }
-
             })
             //질문 전체 가져오기
             .get('/all', async ({ db })=> {
@@ -129,15 +139,15 @@ const app = new Elysia()
                 if(!obj) {
                     return { result : false };
                 } else {
-                    const { content } = body;
+                    const { content, questionId } = body;
                     const result = await db.comment.create({
-                        data : { content, userId : Number(obj.userid) }
+                        data : {content, userId: Number(obj.userid), questionId}
                     });
                     if(result != null) return { result : true };
                     else return { result : false };
                 }
             }, {
-                body : t.Object({ content : t.String() })
+                body : commentDTO
             })
             //답변 작성
             .post('/answer', async ({ body, db, jwt, cookie : { auth } })=> {
@@ -146,16 +156,42 @@ const app = new Elysia()
                 if(!obj) {
                     return { result : false };
                 } else {
-                    const { content } = body;
+                    const { content, questionId } = body;
                     const result = await db.answer.create({
-                        data : { content, userId : Number(obj.userid) }
+                        data : { content, userId : Number(obj.userid), questionId }
                     });
 
                     if(result != null) return { result : true };
                     else return { result : false };
                 }
             }, {
-                body : t.Object({ content : t.String() })
+                body : answerDTO
+            })
+            //답변 추천
+            .post('/recommend', async ({ body, db, jwt, cookie : { auth } })=> {
+                const obj = await jwt.verify(auth);
+
+                if(!obj) {
+                    return { result : false };
+                } else {
+                    const { answerId } = body;
+                    const findRecoomendedList = await db.recommended.findUnique({
+                        where : { userId : Number(obj.userid), answerId }
+                    });
+                    if(findRecoomendedList === null) {
+                        const result = await db.recommended.create({
+                            data : { answerId, userId : Number(obj.userid) }
+                        });
+                        return { result : true, action : 'create' };
+                    } else {
+                        const result = await db.recommended.delete({
+                            where : { answerId, userId : Number(obj.userid) }
+                        })
+                        return { result : true, action : 'delete' };
+                    }
+                }
+            }, {
+                body : t.Object({ answerId : t.Number() })
             })
     })
     .listen(8000);
