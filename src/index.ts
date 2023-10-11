@@ -193,7 +193,7 @@ const app = new Elysia()
                 body : t.Object({ answerId : t.Number() })
             })
     })
-    .listen(8000);
+    .listen(8001);
 
   console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
