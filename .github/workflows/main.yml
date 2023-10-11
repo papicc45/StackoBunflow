@@ -22,4 +22,8 @@ jobs:
           username : ${{ secrets.WAS_ID }}
           key : ${{ secrets.PRIVATE_KEY }}
           port : ${{ secrets.SSH_PORT }}
+          script : |
+            cd elysiaApplication/StackoBunflow
+            git pull
+          
   
