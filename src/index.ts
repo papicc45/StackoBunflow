@@ -2,6 +2,7 @@ import { Elysia, t } from "elysia";
 import {PrismaClient, User} from "@prisma/client";
 import {jwt, JWTPayloadSpec} from '@elysiajs/jwt';
 import { cookie } from '@elysiajs/cookie';
+import { cors } from '@elysiajs/cors'
 import {userDTO, jwtUserDTO, updateUserDTO, questionDTO, commentDTO, answerDTO} from '../requestDTO/requestDTO';
 
 const client = new PrismaClient();
@@ -9,6 +10,7 @@ const setup = ( app : Elysia ) => app.decorate('db', client);
 
 const app = new Elysia()
     .use(setup)
+    .use(cors())
     .use(jwt({ name : 'jwt', secret : 'elysiaApplicationSecretKey' }))
     .use(cookie())
     .decorate('getUserInfo',  (userid : string) => client.user.findUnique({ where : { userid, status : "Y" } }))
