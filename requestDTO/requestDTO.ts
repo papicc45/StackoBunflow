@@ -19,6 +19,7 @@ export const updateUserDTO = t.Object({
 export const questionDTO = t.Object({
     title : t.String(),
     content : t.String(),
+    tag : t.String(),
 })
 
 export const commentDTO = t.Object({

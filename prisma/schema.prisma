@@ -32,6 +32,7 @@ model Question {
     title String @db.Text
     content String @db.Text
     count Int @default(0)
+    tag String @db.Text
     user User @relation(fields : [userId], references : [id])
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @default(now()) @map("updated_at")

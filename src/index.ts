@@ -124,9 +124,9 @@ const app = new Elysia()
                 if(!obj) {
                     return { result : false };
                 } else {
-                    const {title, content} = body;
+                    const {title, content, tag} = body;
                     const result = await db.question.create({
-                        data : { title, content, userId : Number(obj.userid) }
+                        data : { title, content, tag, userId : Number(obj.userid) }
                     });
                     if(result != null) return { result : true };
                     else return { result : false };

@@ -19,6 +19,7 @@ CREATE TABLE `Question` (
     `title` TEXT NOT NULL,
     `content` TEXT NOT NULL,
     `count` INTEGER NOT NULL DEFAULT 0,
+    `tag` TEXT NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `userId` INTEGER NOT NULL,
