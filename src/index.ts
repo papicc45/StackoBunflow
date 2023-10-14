@@ -126,7 +126,9 @@ const app = new Elysia()
             })
             //질문 전체 가져오기
             .get('/all', async ({ db })=> {
-                const questionList = await db.question.findMany();
+                const questionList = await db.question.findMany({
+                    include : { user : { select : { nickname : true } } }
+                });
                 if(questionList.length === 0) return { result : false };
 
                 return { result : true, questionList };
