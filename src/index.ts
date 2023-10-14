@@ -3,7 +3,15 @@ import {PrismaClient, User} from "@prisma/client";
 import {jwt, JWTPayloadSpec} from '@elysiajs/jwt';
 import { cookie } from '@elysiajs/cookie';
 import { cors } from '@elysiajs/cors'
-import {userDTO, jwtUserDTO, updateUserDTO, questionDTO, commentDTO, answerDTO} from '../requestDTO/requestDTO';
+import {
+    userDTO,
+    jwtUserDTO,
+    updateUserDTO,
+    questionDTO,
+    commentDTO,
+    answerDTO,
+    headerDTO
+} from '../requestDTO/requestDTO';
 
 const client = new PrismaClient();
 const setup = ( app : Elysia ) => app.decorate('db', client);
@@ -47,7 +55,7 @@ const app = new Elysia()
                 body : jwtUserDTO
             })
             //회원정보 수정
-            .patch('/update', async ({ body, jwt,  db, cookie : { auth } })=> {
+            .patch('/update', async ({ body, jwt,  db, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
                 if(!obj) {
                     return { result : false };
@@ -62,10 +70,11 @@ const app = new Elysia()
                     else return { result : false };
                 }
             }, {
-                body : updateUserDTO
+                body : updateUserDTO,
+                headers : headerDTO
             })
             //회원정보 삭제(프론트 만들고 쿠키 확인)
-            .delete('/delete', async ({ db, jwt, cookie : { auth }, removeCookie })=> {
+            .delete('/delete', async ({ db, jwt, headers : { auth }, removeCookie })=> {
                 const obj = await jwt.verify(auth);
 
                 if(!obj) {
@@ -81,9 +90,11 @@ const app = new Elysia()
                     }
                     else return { result : false };
                 }
+            }, {
+                headers : headerDTO
             })
             //로그아웃
-            .post('/logout', ({ jwt, cookie : { auth }, removeCookie })=> {
+            .post('/logout', ({ jwt, headers : { auth }, removeCookie })=> {
                 const obj = jwt.verify(auth);
 
                 if(!obj) {
@@ -92,6 +103,8 @@ const app = new Elysia()
                     removeCookie('auth');
                     return { result : true };
                 }
+            }, {
+                headers : headerDTO
             })
     })
     .group('/question', (app)=> {
@@ -119,8 +132,9 @@ const app = new Elysia()
                 return { result : true, questionList };
             })
             //질문 작성
-            .post('', async ({ body, db, jwt, cookie : { auth } })=> {
+            .post('', async ({ body, db, jwt, headers : { auth } })=> {
                 const obj  = await jwt.verify(auth);
+
                 if(!obj) {
                     return { result : false };
                 } else {
@@ -132,10 +146,12 @@ const app = new Elysia()
                     else return { result : false };
                 }
             }, {
-                body : questionDTO
+                body : questionDTO,
+                headers : headerDTO
+
             })
             //댓글 작성
-            .post('/comment', async ({ body, db, jwt, cookie : { auth } })=> {
+            .post('/comment', async ({ body, db, jwt, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
                 if(!obj) {
                     return { result : false };
@@ -148,10 +164,11 @@ const app = new Elysia()
                     else return { result : false };
                 }
             }, {
-                body : commentDTO
+                body : commentDTO,
+                headers : headerDTO
             })
             //답변 작성
-            .post('/answer', async ({ body, db, jwt, cookie : { auth } })=> {
+            .post('/answer', async ({ body, db, jwt, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
 
                 if(!obj) {
@@ -166,10 +183,11 @@ const app = new Elysia()
                     else return { result : false };
                 }
             }, {
-                body : answerDTO
+                body : answerDTO,
+                headers : headerDTO
             })
             //답변 추천
-            .post('/recommend', async ({ body, db, jwt, cookie : { auth } })=> {
+            .post('/recommend', async ({ body, db, jwt, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
 
                 if(!obj) {
@@ -192,7 +210,8 @@ const app = new Elysia()
                     }
                 }
             }, {
-                body : t.Object({ answerId : t.Number() })
+                body : t.Object({ answerId : t.Number() }),
+                headers : headerDTO
             })
     })
     .listen(8001);

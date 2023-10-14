@@ -30,3 +30,7 @@ export const answerDTO = t.Object({
     content : t.String(),
     questionId : t.Integer(),
 })
+
+export const headerDTO = t.Object({
+    auth : t.String(),
+})
