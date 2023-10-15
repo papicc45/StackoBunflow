@@ -113,7 +113,13 @@ const app = new Elysia()
             .get('/:id', async ({ params, db })=> {
                 const question = await db.question.findUnique({
                     where : { id : Number(params.id) },
-                    include : { answer : { include : { user : true } } },
+                    include : {
+                        answer : {
+                            include : {
+                                user : { select : { nickname : true } },
+                                recommended : true
+                            }
+                        }}
                 })
 
                 if(question == null) return { result : false };
@@ -196,7 +202,7 @@ const app = new Elysia()
                 if(!obj) {
                     return { result : false };
                 } else {
-                    const { answerId } = body;
+                    const { answerId, count } = body;
                     const findRecoomendedList = await db.recommended.findUnique({
                         where : { userId : Number(obj.userid), answerId }
                     });
@@ -204,16 +210,24 @@ const app = new Elysia()
                         const result = await db.recommended.create({
                             data : { answerId, userId : Number(obj.userid) }
                         });
+                        await db.answer.update({
+                            where : { id : answerId },
+                            data : { recommend: count + 1 }
+                        })
                         return { result : true, action : 'create' };
                     } else {
                         const result = await db.recommended.delete({
                             where : { answerId, userId : Number(obj.userid) }
                         })
+                        await db.answer.update({
+                            where : { id : answerId },
+                            data : { recommend: count - 1 }
+                        })
                         return { result : true, action : 'delete' };
                     }
                 }
             }, {
-                body : t.Object({ answerId : t.Number() }),
+                body : t.Object({ answerId : t.Number(), count : t.Integer() }),
                 headers : headerDTO
             })
     })
