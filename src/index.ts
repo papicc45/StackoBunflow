@@ -113,7 +113,7 @@ const app = new Elysia()
             .get('/:id', async ({ params, db })=> {
                 const question = await db.question.findUnique({
                     where : { id : Number(params.id) },
-                    include : { answer : true }
+                    include : { answer : { include : { user : true } } },
                 })
 
                 if(question == null) return { result : false };
