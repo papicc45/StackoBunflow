@@ -227,7 +227,7 @@ const app = new Elysia()
                     }
                 }
             }, {
-                body : t.Object({ answerId : t.Number(), count : t.Integer() }),
+                body : t.Object({ answerId : t.Integer(), count : t.Integer() }),
                 headers : headerDTO
             })
     })
