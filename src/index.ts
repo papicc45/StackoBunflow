@@ -210,20 +210,20 @@ const app = new Elysia()
                         const result = await db.recommended.create({
                             data : { answerId, userId : Number(obj.userid) }
                         });
-                        await db.answer.update({
+                        const updateResult = await db.answer.update({
                             where : { id : answerId },
                             data : { recommend: count + 1 }
                         })
-                        return { result : true, action : 'create' };
+                        return { result : true, action : 'create', updateResult };
                     } else {
                         const result = await db.recommended.delete({
                             where : { answerId, userId : Number(obj.userid) }
                         })
-                        await db.answer.update({
+                        const updateResult = await db.answer.update({
                             where : { id : answerId },
                             data : { recommend: count - 1 }
                         })
-                        return { result : true, action : 'delete' };
+                        return { result : true, action : 'delete', updateResult };
                     }
                 }
             }, {
