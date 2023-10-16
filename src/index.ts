@@ -238,6 +238,7 @@ const app = new Elysia()
                 } else {
                     const result = await db.question.findMany({
                         orderBy : [ { createdAt : 'desc' } ],
+                        include : { user : { select : { nickname : true } } },
                         where : {
                             OR : [
                                 { title : { contains : keyword }, },
