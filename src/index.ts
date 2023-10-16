@@ -93,6 +93,21 @@ const app = new Elysia()
             }, {
                 headers : headerDTO
             })
+            .post('/myinfo', async ({ db, jwt, headers : { auth } })=> {
+                const obj = await jwt.verify(auth);
+
+                if(!obj) {
+                    return { result : false };
+                } else {
+                    const userInfo = await db.user.findUnique({
+                        where : { id : Number(obj.userId) }
+                    });
+
+                    return { result : true, userInfo };
+                }
+            }, {
+                headers : headerDTO
+            })
             //로그아웃
             .post('/logout', ({ jwt, headers : { auth }, removeCookie })=> {
                 const obj = jwt.verify(auth);
