@@ -110,9 +110,10 @@ const app = new Elysia()
     .group('/question', (app)=> {
         return app
             //질문 상세
-            .get('/:id', async ({ params, db })=> {
+            .get('', async ({ query, db })=> {
+                const { id, count } = query;
                 const question = await db.question.findUnique({
-                    where : { id : Number(params.id) },
+                    where : { id : Number(id) },
                     include : {
                         answer : {
                             include : {
@@ -124,12 +125,13 @@ const app = new Elysia()
 
                 if(question == null) return { result : false };
                 else{
-                    //조회수 업데이트
-                    await db.question.update({
-                        where : { id : Number(params.id) }, data : { count : question.count + 1 }
-                    })
+                    if(Number(count) === 1) {
+                            await db.question.update({
+                                where : { id : Number(id) }, data : { count : question.count + 1 }
+                            })
+                        }
                     return { result : true, question };
-                }
+                    }
             })
             //질문 전체 가져오기
             .get('/all', async ({ db })=> {
