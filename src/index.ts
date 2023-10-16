@@ -134,6 +134,7 @@ const app = new Elysia()
             //질문 전체 가져오기
             .get('/all', async ({ db })=> {
                 const questionList = await db.question.findMany({
+                    orderBy : [ { createdAt : 'desc' } ],
                     include : { user : { select : { nickname : true } } }
                 });
                 if(questionList.length === 0) return { result : false };
@@ -230,6 +231,24 @@ const app = new Elysia()
                 body : t.Object({ answerId : t.Integer(), count : t.Integer() }),
                 headers : headerDTO
             })
+            .get('/search', async ({ query, db })=> {
+                const {keyword} = query;
+                if(keyword === null) {
+                    return { result :false };
+                } else {
+                    const result = await db.question.findMany({
+                        orderBy : [ { createdAt : 'desc' } ],
+                        where : {
+                            OR : [
+                                { title : { contains : keyword }, },
+                                { content : { contains : keyword }, }
+                            ]
+                        }
+                    });
+
+                    return { result : true, questionList : result };
+                }
+            });
     })
     .listen(8001);
 
