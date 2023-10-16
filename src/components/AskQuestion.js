@@ -11,8 +11,8 @@ import {useEffect, useRef, useState} from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Quill의 스타일시트
 import axios from 'axios';
-import {useSelector} from "react-redux";
 import {modules, formats} from "../utils/toolBarOption";
+import {indexStore} from "../zustand/store";
 
 export default function AskQuestion() {
     const [content, setContent] = useState('');
@@ -23,8 +23,7 @@ export default function AskQuestion() {
     const [checkAlreadyTag, setCheckAlreadyTag] = useState(false);
     const [tagList, setTagList] = useState([]);
     const apiUrl = process.env.REACT_APP_API_URL;
-    const auth = useSelector(state => state.auth.auth);
-
+    const {userIndex} = indexStore();
 
 
     const handleChange = (value) => {
@@ -88,6 +87,7 @@ export default function AskQuestion() {
         for(let tag of tagList) {
             tags += ` ${tag}`;
         }
+        const auth = window.localStorage.getItem('auth');
         const result = await axios({
             method : 'POST',
             url : `${apiUrl}/question`,

@@ -2,17 +2,18 @@ import { _HeaderBox, _Logo, _Ul, _Li, _SearchDiv, _SearchInput, _LoginBtn, _Sign
 import {Link} from "react-router-dom";
 import  './linkStyle.css';
 import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {removeAuth} from "../features/signupSlice";
+import {indexStore} from "../zustand/store";
 export default function Header() {
-    const dispatch = useDispatch();
-    const authValue = useSelector(state => state.auth.auth);
+    const {removeUserIndex} = indexStore();
 
-    useEffect(()=> {
-
-    }, [authValue]);
+    const auth = window.localStorage.getItem('auth');
+    // useEffect(()=> {
+    //
+    // }, [auth]);
     const logout = () => {
-        dispatch(removeAuth());
+        removeUserIndex();
+        window.localStorage.removeItem('auth');
+
     }
     return (
         <>
@@ -36,8 +37,8 @@ export default function Header() {
                     </svg>
                 </_SearchDiv>
                 <div>
-                    {console.log(authValue)}
-                    {authValue === '' ? (
+                    {console.log(auth)}
+                    {auth === null ? (
                             <>
                                 <_LoginBtn><Link to="/signin">Log in</Link></_LoginBtn>
                                 <_SignupBtn><Link to="/signup">Sign Up</Link></_SignupBtn>

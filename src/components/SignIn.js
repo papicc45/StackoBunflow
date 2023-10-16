@@ -9,18 +9,16 @@ import {
 } from "../styledComponents/SignUpComponents";
 import {useRef, useState} from "react";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {setAuth} from "../features/signupSlice";
+import {indexStore} from "../zustand/store";
+
 
 
 
 export default function SignIn() {
-    const authValue = useSelector(state => state.auth.auth);
-    const dispatch = useDispatch();
     const apiUrl = process.env.REACT_APP_API_URL;
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
-
+    const {userIndex, setUserIndex} = indexStore();
     const idRef = useRef();
     const pwRef = useRef();
 
@@ -36,16 +34,18 @@ export default function SignIn() {
         const result = await axios({
             method : 'POST',
             url : `${apiUrl}/user/signin`,
+            // url : 'http://localhost:8001/user/signin',
             data : {
                 userid : id,
                 password : pw,
             }
         });
         if(result.data.result) {
-            console.log(result.data);
             console.log('로그인 성공');
-            // window.sessionStorage.setItem('auth', result.data.cookie);
-            dispatch(setAuth(result.data.cookie));
+            console.log(result.data.user.id);
+            setUserIndex(result.data.user.id);
+            console.log('setUserIndex : ', userIndex);
+            window.localStorage.setItem('auth', result.data.cookie);
         } else {
             console.log(result.data);
             console.log('로그인 실패');
