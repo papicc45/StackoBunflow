@@ -54,9 +54,11 @@ export const _SignUpBtn = styled.button`
   }
 `
 export const _SignInBtn = styled(_SignUpBtn)`
+    margin-top: 40px;
 `
 export const _TestDiv = styled.div`
   width: 100%;
   height: 200px;
   background-color: blue;
 `
+

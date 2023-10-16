@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-
+import '../components/pre.css'
 export const _Container = styled.div`
   display: flex;
   margin: 0 auto;
@@ -32,7 +32,8 @@ export const _MainBar = styled.div`
 `
 
 export const _RightSideBar = styled.div`
-    width: 200px;
+    width: 300px;
+  padding: 20px;
 `
 
 export const _AskDiv = styled.div`
@@ -63,4 +64,5 @@ export const _Tag = styled.span`
   background-color: skyblue;
   font-size: 8px;
   margin-left: 2px;
+  font-family: 'intelone-mono-font-family-regular';
 `

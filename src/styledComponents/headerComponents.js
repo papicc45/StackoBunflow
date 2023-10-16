@@ -5,6 +5,7 @@ export const _HeaderBox = styled.div`
   justify-content: space-evenly;
   align-items: center;
   border-bottom: 1px solid lightgray;
+  position: relative;
   
 `
 
@@ -36,7 +37,7 @@ export const _SearchDiv = styled.div`
 
 export const _SearchInput = styled.input`
   height: 25px;
-  padding-left: 20px;
+  padding-left: 27px;
   width: 300px;
   @media screen and (max-width: 1024px) {
     width: 200px;
@@ -57,4 +58,30 @@ export const _LoginBtn = styled.button`
 
 export const _SignupBtn = styled(_LoginBtn)`
 
+`
+
+export const _AlarmBalloon = styled.div`
+  position: absolute;
+  border : 1px solid skyblue;
+  padding: 10px;
+  border-radius: 7px;
+  margin : 5px 5px 5px 0px;
+  background-color: skyblue;
+`
+
+export const _AlarmBalloonEdge = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 5px solid skyblue;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid skyblue;
+  border-top: 5px solid transparent;
+`
+
+export const _Alarm = styled.div`
+  opacity: ${props => props.visible ? '1' : '0'};
+  transition: opacity ${props => props.visible ? '0s' : '3s'};
+  position: relative;
+  z-index: 9999;
 `

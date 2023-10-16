@@ -3,10 +3,16 @@ import {
     _PasswordInput, _SignUpBtn,
     _SignUpDiv,
 } from "../styledComponents/SignUpComponents";
+import { _InModalBtn } from "../styledComponents/ModalComponent";
 import {useEffect, useReducer, useRef, useState} from "react";
 
 import axios from 'axios';
 import { motion } from "framer-motion";
+
+import Modal from 'react-modal';
+import {Link, useNavigate} from "react-router-dom";
+import { customModalStyles } from "../styledComponents/ModalComponent";
+import Swal from 'sweetalert2';
 
 const initialState = {
     id : '',
@@ -37,8 +43,19 @@ export default function SignUp() {
     const idRef = useRef();
     const pwRef = useRef();
     const nnRef = useRef();
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+    const openModal = () => {
+        setIsOpen(true);
+    }
+
+    const closeModal = () => {
+        setIsOpen(false);
+    }
 
     const signup = async  () => {
+
+
         if(!state.idValid) {
             idRef.current.focus();
             return;
@@ -61,9 +78,20 @@ export default function SignUp() {
             }
         });
         if(result.data.result) {
-            console.log('회원가입 성공');
+            Swal.fire({
+                title : '가입이 완료되었습니다. 로그인 해주세요 !',
+                confirmButtonText : '로그인 페이지로',
+                cancelButtonText : '메인으로',
+                showCancelButton : true,
+            }).then((result)=> {
+                if(result.isConfirmed) {
+                    navigate('/signin');
+                }else {
+                    navigate('/');
+                }
+            })
         } else {
-            console.log('회원가입 실패');
+            console.log('정보변경 실패');
         }
     }
 
@@ -91,6 +119,18 @@ export default function SignUp() {
                 <_NickNameInput ref={nnRef} onChange={(e)=> dispatch({type : 'NICKNAME_CHECK', event : e})}></_NickNameInput>
                 <_SignUpBtn onClick={signup}>Sign Up</_SignUpBtn>
             </_SignUpDiv>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customModalStyles}
+                contentLabel="Example Modal"
+            >
+                <h3 style={{ textAlign : "center" }}>회원가입에 성공하였습니다 ! </h3>
+                <div style={{ display : "flex", justifyContent : "space-evenly" }}>
+                    <_InModalBtn><Link to="/">메인으로</Link></_InModalBtn>
+                    <_InModalBtn><Link to="/signin">로그인</Link></_InModalBtn>
+                </div>
+            </Modal>
         </>
     )
 }

@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn";
 import QusetionList from "./components/QusetionList";
 import AskQuestion from "./components/AskQuestion";
 import QusetionDetail from "./components/QusetionDetail";
+import MyInfo from "./components/MyInfo";
 
 
 export default function Router() {
@@ -17,7 +18,10 @@ export default function Router() {
                     <Route path='/' element={<MainPage/>}></Route>
                     <Route path='/signin' element={<SignIn/>}></Route>
                     <Route path='/signup' element={<SignUp/>}></Route>
+                    <Route path='/myinfo' element={<MyInfo/>}></Route>
                     <Route path='/questions' element={<QusetionList/>}></Route>
+                    {/*<Route path='/questions' element={<QusetionList/>} ></Route>*/}
+                    {/*<Route path='/questions/search' element={<QusetionList/>}></Route>*/}
                     <Route path='/questions/ask' element={<AskQuestion/>}></Route>
                     <Route path='/questions/question/detail/:questionId' element={<QusetionDetail/>}></Route>
                 </Routes>

@@ -22,18 +22,22 @@ export default function QusetionDetail() {
     const [question, setQuestion] = useState({});
     const [recommendCheck, setRecommendCheck] = useState([]);
     const apiUrl = process.env.REACT_APP_API_URL;
+    const localUrl = process.env.REACT_APP_LOCAL_URL;
     const auth = window.localStorage.getItem('auth');
     const answerRef = useRef();
-    const {userIndex} = indexStore();
+    const { userIndex } = indexStore();
+    // console.log(userIndex);
+    const unsubscribe = indexStore.subscribe(userIndex => console.log('setUserIndex : ', userIndex), state => state.userIndex);
+
     const handleChange = (value) => {
         setContent(value);
     };
 
-    const getQuestionInfo = async () => {
+    const getQuestionInfo = async (count) => {
         try {
             const result = await axios({
                 method : 'GET',
-                url : `${apiUrl}/question/${questionId}`
+                url : `${apiUrl}/question?id=${questionId}&count=${count}`
             })
             console.log(result);
             if(result.data.result) {
@@ -44,8 +48,9 @@ export default function QusetionDetail() {
         }
     }
 
+
     useEffect(()=> {
-        getQuestionInfo();
+        getQuestionInfo(1);
     }, []);
 
 
@@ -68,7 +73,7 @@ export default function QusetionDetail() {
         if(result.data.result) {
            console.log('답변 작성 성공');
            setContent('');
-           getQuestionInfo();
+           getQuestionInfo(0);
         }
     }
 
@@ -85,7 +90,7 @@ export default function QusetionDetail() {
         console.log(result);
         if(result.data.result) {
             console.log('추천 handle 성공');
-            getQuestionInfo();
+            getQuestionInfo(0);
         }
     }
     const handleRecommend2 = async (answerId, count) => {
@@ -101,7 +106,7 @@ export default function QusetionDetail() {
         console.log(result);
         if(result.data.result) {
             console.log('추천 handle 성공');
-            getQuestionInfo();
+            getQuestionInfo(0);
         }
     }
     return (
@@ -136,6 +141,8 @@ export default function QusetionDetail() {
                                 ) }
                                 <div>
                                 {question.answer !== undefined && question.answer.map((value, idx)=> {
+                                    console.log('value.id' , value.id);
+                                    console.log('value.recommend' , value.recommend);
                                     let check = false;
                                     if(value.recommended.length !== 0) {
                                         for(let val of value.recommended) {
@@ -151,10 +158,11 @@ export default function QusetionDetail() {
                                         <div style={{ borderBottom : "1px solid lightgray", paddingBottom : "10px" }}>
                                             <div dangerouslySetInnerHTML={{ __html : value.content }}></div>
                                             <div style={{ display : "flex"}}>
-                                                <div style={{  width : "70%" }}>
+                                                <div style={{  width : "70%"}}>
+
                                                     <span>
                                                         {check &&
-                                                            <svg style={{ backgroundColor : "skyblue", border : "1px solid skyblue", padding : "3px", borderRadius : "4px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            <svg style={{ backgroundColor : "skyblue", border : "1px solid skyblue", padding : "3px", borderRadius : "4px", marginBottom : "-5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                                  fill="currentColor" className="bi bi-hand-thumbs-up"
                                                                  viewBox="0 0 16 16" onClick={()=> handleRecommend1(value.id, value.recommend)}>
                                                                 <path
@@ -162,7 +170,7 @@ export default function QusetionDetail() {
                                                                 </svg>
                                                         }
                                                         {!check &&
-                                                            <svg style={{ border : "1px solid skyblue", padding : "3px", borderRadius : "4px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            <svg style={{ border : "1px solid skyblue", padding : "3px", borderRadius : "4px", marginBottom : "-5px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                                  fill="currentColor" className="bi bi-hand-thumbs-up"
                                                                  viewBox="0 0 16 16" onClick={()=> handleRecommend2(value.id, value.recommend)}>
                                                                 <path

@@ -10,19 +10,23 @@ import {
 import {useRef, useState} from "react";
 import axios from "axios";
 import {indexStore} from "../zustand/store";
-
-
+import { useForm } from 'react-hook-form';
+import {useNavigate} from "react-router-dom";
 
 
 export default function SignIn() {
     const apiUrl = process.env.REACT_APP_API_URL;
+    const localUrl = process.env.REACT_APP_LOCAL_URL;
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const {userIndex, setUserIndex} = indexStore();
     const idRef = useRef();
     const pwRef = useRef();
-
-    const signin = async () => {
+    const loginFailAlarm = useRef();
+    const { handleSubmit } = useForm();
+    const unsubscribe = indexStore.subscribe(userIndex => console.log('setUserIndex : ', userIndex), state => state.userIndex);
+    const navigate = useNavigate();
+    const onValid = async () => {
         if(id === '') {
             idRef.current.focus();
             return;
@@ -42,36 +46,40 @@ export default function SignIn() {
         });
         if(result.data.result) {
             console.log('로그인 성공');
-            console.log(result.data.user.id);
-            setUserIndex(result.data.user.id);
-            console.log('setUserIndex : ', userIndex);
+            const index = result.data.user.id;
             window.localStorage.setItem('auth', result.data.cookie);
+            setUserIndex(index);
+            navigate('/');
         } else {
             console.log(result.data);
             console.log('로그인 실패');
+            loginFailAlarm.current.textContent = '잘못된 아이디 혹은 비밀번호를 입력하셨습니다. ';
         }
 
     }
     return (
         <>
-            <_SignInDiv as={motion.div}
-                        animate={{
-                            scale: [1, 2, 2, 1, 1],
-                            rotate: [0, 0, 180, 180, 0],
-                            borderRadius: ["0%", "0%", "20%", "20%", "0%"]
-                        }}
-                        transition={{
-                            duration: 2,
-                            ease: "easeInOut",
-                            times: [0, 0.2, 0.5, 0.8, 1],
-                        }}>
-                <h1 style={{ textAlign : "center" }}>Sign In</h1>
-                <h3>ID</h3>
-                <_IdInput ref={idRef} onChange={(e)=>setId(e.target.value)}></_IdInput>
-                <h3>Password</h3>
-                <_PasswordInput ref={pwRef} onChange={(e)=> setPw(e.target.value)} type="password"></_PasswordInput>
-                <_SignInBtn onClick={signin}>Sign Up</_SignInBtn>
-            </_SignInDiv>
+            <form onSubmit={handleSubmit(onValid)}>
+                <_SignInDiv as={motion.div}
+                            animate={{
+                                scale: [1, 2, 2, 1, 1],
+                                rotate: [0, 0, 180, 180, 0],
+                                borderRadius: ["0%", "0%", "20%", "20%", "0%"]
+                            }}
+                            transition={{
+                                duration: 2,
+                                ease: "easeInOut",
+                                times: [0, 0.2, 0.5, 0.8, 1],
+                            }}>
+                    <h1 style={{ textAlign : "center" }}>Sign In</h1>
+                    <h3>ID</h3>
+                    <_IdInput ref={idRef} onChange={(e)=>setId(e.target.value)}></_IdInput>
+                    <h3>Password</h3>
+                    <_PasswordInput ref={pwRef} onChange={(e)=> setPw(e.target.value)} type="password"></_PasswordInput>
+                    <h3 style={{ color : "red" }} ref={loginFailAlarm}></h3>
+                    <_SignInBtn type="submit">Sign In</_SignInBtn>
+                </_SignInDiv>
+            </form>
         </>
     )
 }
