@@ -96,11 +96,12 @@ const app = new Elysia()
             .post('/myinfo', async ({ db, jwt, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
 
+                console.log(obj);
                 if(!obj) {
                     return { result : false };
                 } else {
                     const userInfo = await db.user.findUnique({
-                        where : { id : Number(obj.userId) }
+                        where : { id : Number(obj.userid) }
                     });
 
                     return { result : true, userInfo };
