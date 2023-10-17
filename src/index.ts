@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import {PrismaClient, User} from "@prisma/client";
+import {Prisma, PrismaClient, User} from "@prisma/client";
 import {jwt, JWTPayloadSpec} from '@elysiajs/jwt';
 import { cookie } from '@elysiajs/cookie';
 import { cors } from '@elysiajs/cors'
@@ -149,15 +149,31 @@ const app = new Elysia()
                     return { result : true, question };
                     }
             })
+            .get('/count', async ({ db })=> {
+                const result = await db.question.aggregate({
+                    _count : { id : true },
+                })
+
+                return { result };
+            })
             //질문 전체 가져오기
-            .get('/all', async ({ db })=> {
+            .get('/all', async ({ db, query })=> {
+                const { page } = query;
+                const amount = (Number(page) - 1) * 5;
+
                 const questionList = await db.question.findMany({
+                    skip : amount,
+                    take : 5,
                     orderBy : [ { createdAt : 'desc' } ],
                     include : { user : { select : { nickname : true } } }
                 });
                 if(questionList.length === 0) return { result : false };
 
                 return { result : true, questionList };
+            }, {
+                query : t.Object({
+                    page : t.String()
+                })
             })
             //질문 작성
             .post('', async ({ body, db, jwt, headers : { auth } })=> {
@@ -275,11 +291,15 @@ const app = new Elysia()
                 return { tagList };
             })
             .get('/search', async ({ query, db })=> {
-                const {keyword} = query;
+                const {keyword, page} = query;
+                const amount = (Number(page) - 1) * 5;
+
                 if(keyword === null) {
                     return { result :false };
                 } else {
                     const result = await db.question.findMany({
+                        skip : amount,
+                        take : 5,
                         orderBy : [ { createdAt : 'desc' } ],
                         include : { user : { select : { nickname : true } } },
                         where : {
