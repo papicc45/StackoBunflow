@@ -328,7 +328,6 @@ const app = new Elysia()
                             OR : [
                                 { title : { contains : keyword }, },
                                 { content : { contains : keyword }, },
-                                { tag : { contains : keyword }, },
                             ],
                         }
                     });
