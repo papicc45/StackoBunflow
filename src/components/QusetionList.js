@@ -66,12 +66,6 @@ export default function Questions() {
         }
 
     }
-    // useEffect(()=> {
-    //     getQuestionCount();
-    //     console.log('after useeffect count : ', questionCount);
-    //     console.log('page' , page);
-    // }, []);
-
     useEffect(()=> {
         getQuestionCount();
         if(keyword === null) {
@@ -79,13 +73,8 @@ export default function Questions() {
         } else {
             searchQuestions();
         }
-    }, [questionList]);
+    }, [page, keyword]);
 
-    // useEffect(()=> {
-    //     console.log('서치퀘스천 전용 effect');
-    //     getQuestionCount();
-    //     searchQuestions();
-    // }, [questionCount]);
     const questionDetail = (id) => {
         navigate(`question/detail/${id}`);
     }
@@ -93,7 +82,9 @@ export default function Questions() {
     const handlePageChange = (page) => {
         setPage(page);
     }
-
+    useEffect(() => {
+        setPage(1);
+    }, [keyword]);
     return (
         <>
             <_Container>
