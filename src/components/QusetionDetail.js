@@ -44,6 +44,19 @@ export default function QusetionDetail() {
             console.log(result);
             if(result.data.result) {
                 setQuestion(result.data.question);
+                console.log(result.data.question);
+                const answerArr = result.data.question.answer;
+                const arr = new Array();
+                for(let answer of answerArr) {
+                    const answerId = answer.id;
+                    let check = false;
+                    for(let recommend of answer.recommended) {
+                        if(recommend.userId === userIndex)
+                            check = true;
+                    }
+                    arr.push({ answerId : answerId, recommended : check });
+                }
+                setRecommendCheck(arr);
             }
         } catch (err) {
             console.log(err);
@@ -81,11 +94,13 @@ export default function QusetionDetail() {
 
     const handleRecommend1 = async (answerId, count) => {
         if(auth === null) return;
+        console.log('handleRecommend1');
         console.log('answerId: ', answerId);
         console.log('count: ', count);
+        console.log('userIndex : ', userIndex);
         const result = await axios({
             method : 'POST',
-            url : `${apiUrl}/question/recommend`,
+            url : `${localUrl}/question/recommend`,
             headers : { auth : auth },
             data : { answerId : Number(answerId), count : Number(count) },
         });
@@ -98,8 +113,10 @@ export default function QusetionDetail() {
     }
     const handleRecommend2 = async (answerId, count) => {
         if(auth === null) return;
+        console.log('handleRecommend2');
         console.log('answerId: ', answerId);
         console.log('count: ', count);
+        console.log('userIndex : ', userIndex);
         const result = await axios({
             method : 'POST',
             url : `${apiUrl}/question/recommend`,
