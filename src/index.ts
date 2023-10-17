@@ -255,10 +255,12 @@ const app = new Elysia()
             //답변 추천
             .post('/recommend', async ({ body, db, jwt, headers : { auth } })=> {
                 const obj = await jwt.verify(auth);
-
+                console.log('1');
                 if(!obj) {
+                    console.log('2');
                     return { result : false };
                 } else {
+                    console.log('3');
                     const { answerId, count } = body;
                     const findRecoomendedList = await db.recommended.findUnique({
                         where : { userId : Number(obj.userid), answerId }
