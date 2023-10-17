@@ -265,23 +265,30 @@ const app = new Elysia()
                     const findRecoomendedList = await db.recommended.findUnique({
                         where : { userId : Number(obj.userid), answerId }
                     });
+                    console.log('findRecoomendedList', findRecoomendedList);
                     if(findRecoomendedList === null) {
+                        console.log('4');
                         const result = await db.recommended.create({
                             data : { answerId, userId : Number(obj.userid) }
                         });
+                        console.log('result : ', result);
                         const updateResult = await db.answer.update({
                             where : { id : answerId },
                             data : { recommend: count + 1 }
                         })
+                        console.log('updateResult : ', updateResult);
                         return { result : true, action : 'create', updateResult };
                     } else {
+                        console.log('5');
                         const result = await db.recommended.delete({
                             where : { answerId, userId : Number(obj.userid) }
                         })
+                        console.log('5 - result : ', result);
                         const updateResult = await db.answer.update({
                             where : { id : answerId },
                             data : { recommend: count - 1 }
                         })
+                        console.log('5 - updateResult : ', updateResult);
                         return { result : true, action : 'delete', updateResult };
                     }
                 }
