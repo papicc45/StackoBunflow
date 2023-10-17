@@ -249,6 +249,31 @@ const app = new Elysia()
                 body : t.Object({ answerId : t.Integer(), count : t.Integer() }),
                 headers : headerDTO
             })
+            .get('/tags', async ({ db })=> {
+                const result = await db.question.findMany({
+                    select : { tag : true },
+                });
+
+                const map = new Map();
+                const tagList = new Array();
+                for(let val of result) {
+                    const tags = val.tag.substring(1, val.tag.length).split(" ");
+                    for(let tag of tags) {
+                        if(map.has(tag)) {
+                            map.set(tag, map.get(tag) + 1);
+                        } else {
+                            map.set(tag, 1);
+                        }
+                    }
+                }
+
+                map.forEach((value, key)=> {
+                    const tag = { tagName : key, count : value };
+                    tagList.push(tag);
+                })
+
+                return { tagList };
+            })
             .get('/search', async ({ query, db })=> {
                 const {keyword} = query;
                 if(keyword === null) {
@@ -260,8 +285,9 @@ const app = new Elysia()
                         where : {
                             OR : [
                                 { title : { contains : keyword }, },
-                                { content : { contains : keyword }, }
-                            ]
+                                { content : { contains : keyword }, },
+                                { tag : { contains : keyword }, },
+                            ],
                         }
                     });
 
