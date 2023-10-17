@@ -262,11 +262,11 @@ const app = new Elysia()
                 } else {
                     console.log('3');
                     const { answerId, count } = body;
-                    const findRecoomendedList = await db.recommended.findUnique({
-                        where : { userId : Number(obj.userid), answerId }
+                    const findRecoomendedList = await db.recommended.findMany({
+                        where : { userId : Number(obj.userid), answerId },
                     });
                     console.log('findRecoomendedList', findRecoomendedList);
-                    if(findRecoomendedList === null) {
+                    if(findRecoomendedList.length === 0) {
                         console.log('4');
                         const result = await db.recommended.create({
                             data : { answerId, userId : Number(obj.userid) }
@@ -279,9 +279,10 @@ const app = new Elysia()
                         console.log('updateResult : ', updateResult);
                         return { result : true, action : 'create', updateResult };
                     } else {
+                        const id = findRecoomendedList[0].id;
                         console.log('5');
                         const result = await db.recommended.delete({
-                            where : { answerId, userId : Number(obj.userid) }
+                            where : { id : id }
                         })
                         console.log('5 - result : ', result);
                         const updateResult = await db.answer.update({
@@ -294,7 +295,7 @@ const app = new Elysia()
                 }
             }, {
                 body : t.Object({ answerId : t.Integer(), count : t.Integer() }),
-                headers : headerDTO
+                headers : headerDTO,
             })
             .get('/tags', async ({ db })=> {
                 const result = await db.question.findMany({

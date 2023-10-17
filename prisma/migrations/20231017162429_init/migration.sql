@@ -57,10 +57,9 @@ CREATE TABLE `Answer` (
 
 -- CreateTable
 CREATE TABLE `Recommended` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `answerId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Recommended_userId_key`(`userId`),
-    UNIQUE INDEX `Recommended_answerId_key`(`answerId`),
-    INDEX `Recommended_userId_answerId_idx`(`userId`, `answerId`)
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
