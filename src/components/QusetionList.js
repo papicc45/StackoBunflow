@@ -50,7 +50,7 @@ export default function Questions() {
         if(keyword === null) {
             const result = await axios({
                 method : "GET",
-                url : `${localUrl}/question/count?keyword=${keyword}`,
+                url : `${apiUrl}/question/count?keyword=${keyword}`,
             });
 
             setQuestionCount(result.data.result._count.id);
@@ -58,7 +58,7 @@ export default function Questions() {
             console.log('questioncountfunction : ', keyword);
             const result = await axios({
                 method : "GET",
-                url : `${localUrl}/question/count?keyword=${keyword}`,
+                url : `${apiUrl}/question/count?keyword=${keyword}`,
             });
 
             setQuestionCount(result.data.result._count.id);
