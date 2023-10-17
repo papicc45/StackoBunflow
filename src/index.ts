@@ -151,20 +151,32 @@ const app = new Elysia()
             })
             .get('/count', async ({ db, query })=> {
                 const { keyword } = query;
-                if(keyword === null) {
+                console.log(keyword);
+                if(keyword === 'null') {
+                    console.log('keyword null');
                     const result = await db.question.aggregate({
                         _count : { id : true },
                     })
 
                     return { result };
                 } else {
+                    console.log('keyword not null');
                     const result = await db.question.aggregate({
                         _count : { id : true },
-                        where : { tag : { contains : keyword } }
+                        where : {
+                            OR : [
+                                { title : { contains : keyword }, },
+                                { content : { contains : keyword }, },
+                            ],
+                        }
                     })
-
+                    console.log(result);
                     return { result };
                 }
+            }, {
+                query : t.Object({
+                    keyword : t.String()
+                })
             })
             //질문 전체 가져오기
             .get('/all', async ({ db, query })=> {
