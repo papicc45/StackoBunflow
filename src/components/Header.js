@@ -44,7 +44,7 @@ export default function Header() {
             return;
         }
 
-        navigate(`/questions/?search=${keyword}`);
+        navigate(`/questions?search=${keyword}`);
     }
 
     return (

@@ -7,6 +7,8 @@ export const _Container = styled.div`
 `
 
 export const _LeftSideBar = styled.div`
+    border-right: 1px solid lightgray;;
+  height: 1200px;
 `
 
 export const _Home = styled.div`
@@ -18,7 +20,7 @@ export const _SideUl = styled.ul`
 `
 
 export const _SideLi = styled.li`
-  margin: 10px;
+  padding : 10px;
   margin-left: 20px;
 `
 

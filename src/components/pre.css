@@ -1,9 +1,16 @@
+@font-face {
+    font-family: 'intelone-mono-font-family-regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/intelone-mono-font-family-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
 pre {
     background-color: #F6F6F6;
     font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
+    font-family: 'intelone-mono-font-family-regular';
 }
 
 @font-face {
@@ -13,12 +20,6 @@ pre {
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'intelone-mono-font-family-regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/intelone-mono-font-family-regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'HakgyoansimWoojuR';

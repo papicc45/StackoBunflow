@@ -1,8 +1,8 @@
 import Card from "../styledComponents/CardComponent";
 
 const img = [
-    ['bun.png', 999, 100, 'Bun'],
-    ['prisma.png', 40, 500, 'Prisma'],
+    ['bun.png', 340, 10, 'Bun'],
+    ['prisma.png', 20, 40, 'Prisma'],
     ['elysiajs.png', 60, 90, 'Elysia'],
     ['wsl.png', 80, 120, 'WSL'],
     ['gitaction.png', 100, 140, 'Git Action'],

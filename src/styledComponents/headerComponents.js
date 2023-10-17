@@ -38,7 +38,7 @@ export const _SearchDiv = styled.div`
 export const _SearchInput = styled.input`
   height: 25px;
   padding-left: 27px;
-  width: 300px;
+  width: 450px;
   @media screen and (max-width: 1024px) {
     width: 200px;
   }
@@ -48,6 +48,7 @@ export const _SearchInput = styled.input`
 `
 
 export const _LoginBtn = styled.button`
+  width: 100px;
   margin : 10px;
   padding : 10px;
   padding : 10px;
