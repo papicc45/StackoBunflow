@@ -189,9 +189,11 @@ const app = new Elysia()
                     orderBy : [ { createdAt : 'desc' } ],
                     include : { user : { select : { nickname : true } } }
                 });
+
                 if(questionList.length === 0) return { result : false };
 
-                return { result : true, questionList };
+                return { result : true, questionList  };
+
             }, {
                 query : t.Object({
                     page : t.String()
@@ -341,6 +343,7 @@ const app = new Elysia()
                             ],
                         }
                     });
+
 
                     return { result : true, questionList : result };
                 }
