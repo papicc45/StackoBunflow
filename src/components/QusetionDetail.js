@@ -99,7 +99,7 @@ export default function QusetionDetail() {
         console.log('userIndex : ', userIndex);
         const result = await axios({
             method : 'POST',
-            url : `${localUrl}/question/recommend`,
+            url : `${apiUrl}/question/recommend`,
             headers : { auth : auth },
             data : { answerId : Number(answerId), count : Number(count) },
         });
