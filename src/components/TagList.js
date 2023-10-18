@@ -53,7 +53,7 @@ export default function TagList() {
                                 return (
                                         <div style={{ width : "150px", height : "50px", padding : "10px", border : '1px solid lightgray', margin : "10px", borderRadius : "5px", lineHeight : "50px" }} onClick={()=> searchQuestions(value.tagName)}>
                                             <_Tag>{value.tagName}</_Tag>
-                                            <span> - {value.count} questions</span>
+                                            <span style={{ fontSize : "10px" }}> - {value.count} questions</span>
                                         </div>
                                     )
                             })}

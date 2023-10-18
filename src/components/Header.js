@@ -45,6 +45,7 @@ export default function Header() {
         }
 
         navigate(`/questions?search=${keyword}`);
+        setKeyword('');
     }
 
     return (
@@ -76,7 +77,7 @@ export default function Header() {
                         </button>
                         <_Alarm visible={isVisible}>
                             <_AlarmBalloonEdge></_AlarmBalloonEdge>
-                            <_AlarmBalloon>키워드를 입력해주세요.</_AlarmBalloon>
+                            <_AlarmBalloon>Please enter keyword..</_AlarmBalloon>
                         </_Alarm>
                     </_SearchDiv>
                 </form>

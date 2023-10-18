@@ -13,6 +13,9 @@ import 'react-quill/dist/quill.snow.css'; // Quill의 스타일시트
 import axios from 'axios';
 import {modules, formats} from "../utils/toolBarOption";
 import {indexStore} from "../zustand/store";
+import Swal from 'sweetalert2';
+import {useNavigate} from "react-router-dom";
+import './inlineCode.css'
 
 export default function AskQuestion() {
     const [content, setContent] = useState('');
@@ -24,6 +27,7 @@ export default function AskQuestion() {
     const [tagList, setTagList] = useState([]);
     const apiUrl = process.env.REACT_APP_API_URL;
     const {userIndex} = indexStore();
+    const navigate = useNavigate();
 
 
     const handleChange = (value) => {
@@ -95,6 +99,16 @@ export default function AskQuestion() {
             data : { title, content, tag : tags },
         })
         console.log(result.data.result);
+        if(result.data.result) {
+            Swal.fire({
+                title : 'Your question has been successfully registered ',
+                confirmButtonText : 'Comfirm',
+            }).then((result)=> {
+                if(result.isConfirmed) {
+                    navigate('/questions');
+                }
+            })
+        }
 
     }
     return (
@@ -126,7 +140,6 @@ export default function AskQuestion() {
                             <div>Title</div>
                             <span>Be specific and imagine you’re asking a question to another person.</span><br/> <br/>
                             <_TitleInput onFocus={handleTitleFocus} onChange={(e)=> setTitle(e.target.value)}></_TitleInput><br/>
-                            <_NextBtn>Next</_NextBtn>
                         </_QuestionTitleDiv>
                             <div>
                                 <_WritingAGoodTitle ref={titleRef}>
@@ -173,7 +186,6 @@ export default function AskQuestion() {
                             <span>Introduce the problem and expand on what you put in the title. Minimum 20 characters.</span><br/><br/>
                             <div style={{height : "400px"  }}>
                                 <ReactQuill  modules={modules} formats={formats} value={content} onChange={handleChange} style={{ height : '300px'}} onFocus={handleProblemFocus}></ReactQuill><br/><br/>
-                                <_NextBtn>Next</_NextBtn>
                             </div>
                         </_QuestionProblemDiv>
                         <div>

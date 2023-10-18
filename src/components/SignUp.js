@@ -79,9 +79,9 @@ export default function SignUp() {
         });
         if(result.data.result) {
             Swal.fire({
-                title : '가입이 완료되었습니다. 로그인 해주세요 !',
-                confirmButtonText : '로그인 페이지로',
-                cancelButtonText : '메인으로',
+                title : 'Registration is complete. Please log in!',
+                confirmButtonText : 'Login',
+                cancelButtonText : 'Main',
                 showCancelButton : true,
             }).then((result)=> {
                 if(result.isConfirmed) {
@@ -111,10 +111,10 @@ export default function SignUp() {
                 <h1 style={{ textAlign : "center" }}>Sign Up</h1>
                 <h3>ID</h3>
                 <_IdInput ref={idRef} onChange={(e)=> dispatch({ type : 'ID_CHECK' , value : e.target.value})}></_IdInput>
-                {!state.idValid && state.id !== '' && <p style={{ color: 'red' }}> 아이디의 첫번째 글자는 영어 대,소문자를 입력해주세요</p>}
+                {!state.idValid && state.id !== '' && <p style={{ color: 'red' }}> Please enter an uppercase or lowercase English letter as the first character of your username</p>}
                 <h3>Password</h3>
                 <_PasswordInput ref={pwRef} onChange={(e)=> dispatch({ type : 'PW_CHECK', value : e.target.value })} type="password"></_PasswordInput>
-                {!state.pwValid && state.password !== '' && <p style={{ color: 'red' }}> 영문, 숫자, 특수문자 포함 8자 이상을 입력해주세요</p>}
+                {!state.pwValid && state.password !== '' && <p style={{ color: 'red' }}> Please enter at least 8 characters including letters, numbers, and special characters</p>}
                 <h3>Nickname</h3>
                 <_NickNameInput ref={nnRef} onChange={(e)=> dispatch({type : 'NICKNAME_CHECK', event : e})}></_NickNameInput>
                 <_SignUpBtn onClick={signup}>Sign Up</_SignUpBtn>
@@ -127,8 +127,8 @@ export default function SignUp() {
             >
                 <h3 style={{ textAlign : "center" }}>회원가입에 성공하였습니다 ! </h3>
                 <div style={{ display : "flex", justifyContent : "space-evenly" }}>
-                    <_InModalBtn><Link to="/">메인으로</Link></_InModalBtn>
-                    <_InModalBtn><Link to="/signin">로그인</Link></_InModalBtn>
+                    <_InModalBtn><Link to="/">Main</Link></_InModalBtn>
+                    <_InModalBtn><Link to="/signin">Login</Link></_InModalBtn>
                 </div>
             </Modal>
         </>

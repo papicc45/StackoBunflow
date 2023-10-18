@@ -73,6 +73,7 @@ export default function Questions() {
         } else {
             searchQuestions();
         }
+        console.log(questionList);
     }, [page, keyword]);
 
     const questionDetail = (id) => {
@@ -118,8 +119,8 @@ export default function Questions() {
                                         <p style={{ fontSize : '12px' }}>{value.count} views</p>
                                     </div>
                                     <div style={{ width : "100%", margin : "5px", maxWidth : '500px'}}>
-                                        <p style={{ fontWeight : "bold", fontSize : "20px", textOverflow : 'ellipsis', overflow : 'hidden' }}>{value.title}</p>
-                                        <div style={{ textOverflow : 'ellipsis', overflow : 'hidden' }}>{sanitizedText}</div>
+                                        <p style={{ fontWeight : "bold", fontSize : "20px", overflow : 'hidden', display : '-webkit-box', WebkitLineClamp : '2', WebkitBoxOrient : 'vertical' }}>{value.title}</p>
+                                        <div style={{ overflow : 'hidden', display : '-webkit-box', WebkitLineClamp : '2', WebkitBoxOrient : 'vertical' }}>{sanitizedText}</div>
                                         <br/>
                                         <div style={{ display : "flex", justifyContent : "space-between"}}>
                                             <div>

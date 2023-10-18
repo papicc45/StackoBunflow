@@ -55,9 +55,9 @@ export default function MyInfo() {
 
     const openModal = (work) => {
         if(work === 'update') {
-            setModalText('정보변경 되었습니다 !');
+            setModalText('The information has been updated !');
         } else {
-            setModalText('회원탈퇴 되었습니다 !');
+            setModalText('Your account has been successfully deleted !');
         }
         setIsOpen(true);
     }
@@ -67,7 +67,7 @@ export default function MyInfo() {
     }
     const deleteUser = () => {
         Swal.fire({
-            title : '정말 탈퇴하시겠습니까?',
+            title : 'Are you sure you want to delete your account?',
             confirmButtonText : 'Yes',
             showCancelButton : true,
         }).then(async (result)=> {
@@ -88,7 +88,7 @@ export default function MyInfo() {
     const updateInfo = () => {
         console.log('updateinfo');
         Swal.fire({
-            title : '정말 변경하시겠습니까?',
+            title : 'Are you sure you want to change this setting?',
             confirmButtonText : "Yes",
             cancelButtonText : "No",
             showCancelButton : true,
@@ -129,17 +129,17 @@ export default function MyInfo() {
                             ease: "easeInOut",
                             times: [0, 0.2, 0.5, 0.8, 1],
                         }}>
-                <h1 style={{ textAlign : "center" }}>내 정보</h1>
+                <h1 style={{ textAlign : "center" }}>My Info</h1>
                 <h3>ID</h3>
                 <_IdInput placeholder={beforeId} readOnly></_IdInput>
                 <h3>Password</h3>
                 <_PasswordInput ref={pwRef} onChange={(e)=> dispatch({ type : 'PW_CHECK', value : e.target.value })} type="password"></_PasswordInput>
-                {!state.pwValid && state.password !== '' && <p style={{ color: 'red' }}> 영문, 숫자, 특수문자 포함 8자 이상을 입력해주세요</p>}
+                {!state.pwValid && state.password !== '' && <p style={{ color: 'red' }}> Please enter at least 8 characters including letters, numbers, and special characters</p>}
                 <h3>Nickname</h3>
                 <_NickNameInput placeholder={beforeNickname} ref={nnRef} onChange={(e)=> dispatch({type : 'NICKNAME_CHECK', event : e})}></_NickNameInput>
                 <div style={{ display : "flex" }}>
-                    <_SignUpBtn onClick={updateInfo}>정보수정</_SignUpBtn>
-                    <_SignUpBtn onClick={deleteUser}>탈퇴하기</_SignUpBtn>
+                    <_SignUpBtn onClick={updateInfo}>Update</_SignUpBtn>
+                    <_SignUpBtn onClick={deleteUser}>Delete</_SignUpBtn>
                 </div>
             </_SignUpDiv>
             <Modal
@@ -150,7 +150,7 @@ export default function MyInfo() {
             >
                 <h3 style={{ textAlign : "center" }}>{modalText}</h3>
                 <div style={{ display : "flex", justifyContent : "space-evenly" }}>
-                    <_InModalBtn><Link to="/">메인으로</Link></_InModalBtn>
+                    <_InModalBtn><Link to="/">Go to Main</Link></_InModalBtn>
                     {/*<_InModalBtn><Link to="/signin">로그인</Link></_InModalBtn>*/}
                 </div>
             </Modal>

@@ -45,15 +45,13 @@ export default function SignIn() {
             }
         });
         if(result.data.result) {
-            console.log('로그인 성공');
             const index = result.data.user.id;
             window.localStorage.setItem('auth', result.data.cookie);
             setUserIndex(index);
             navigate('/');
         } else {
             console.log(result.data);
-            console.log('로그인 실패');
-            loginFailAlarm.current.textContent = '잘못된 아이디 혹은 비밀번호를 입력하셨습니다. ';
+            loginFailAlarm.current.textContent = 'You have entered an incorrect username or password.';
         }
 
     }

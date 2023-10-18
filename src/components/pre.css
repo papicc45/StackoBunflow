@@ -11,6 +11,8 @@ pre {
     padding: 5px;
     margin: 5px;
     font-family: 'intelone-mono-font-family-regular';
+    /*white-space: pre-wrap;*/
+    overflow-x: auto;
 }
 
 @font-face {

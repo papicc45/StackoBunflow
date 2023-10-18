@@ -12,7 +12,7 @@ export const _SignUpDiv = styled.div`
 
 export const _SignInDiv = styled(_SignUpDiv)`
   width: 400px;
-  height: 400px;
+  height: 550px;
 `
 export const _IdInput = styled.input`
   height: 30px;
