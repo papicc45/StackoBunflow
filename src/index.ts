@@ -1,4 +1,4 @@
-import { Elysia, t } from "elysia";
+import {Context, Elysia, t} from "elysia";
 import {Prisma, PrismaClient, User} from "@prisma/client";
 import {jwt, JWTPayloadSpec} from '@elysiajs/jwt';
 import { cookie } from '@elysiajs/cookie';
@@ -15,10 +15,10 @@ import {
 
 const client = new PrismaClient();
 const setup = ( app : Elysia ) => app.decorate('db', client);
-
+type CORSOriginFn = (context: Context) => boolean | void
 const app = new Elysia()
-    .use(setup)
     .use(cors())
+    .use(setup)
     .use(jwt({ name : 'jwt', secret : 'elysiaApplicationSecretKey' }))
     .use(cookie())
     .decorate('getUserInfo',  (userid : string) => client.user.findUnique({ where : { userid, status : "Y" } }))
@@ -350,6 +350,7 @@ const app = new Elysia()
             });
     })
     .listen(8001);
+
 
   console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
