@@ -15,12 +15,9 @@ import {
 
 const client = new PrismaClient();
 const setup = ( app : Elysia ) => app.decorate('db', client);
-const corsOptions = {
-    origin: 'https://web-stackobunflow-client-jvpb2alnv5joz1.sel5.cloudtype.app/', // 허용하려는 도메인
-    optionsSuccessStatus: 200
-}
+
 const app = new Elysia()
-    .use(cors(corsOptions))
+    .use(cors())
     .use(setup)
     .use(jwt({ name : 'jwt', secret : 'elysiaApplicationSecretKey' }))
     .use(cookie())
