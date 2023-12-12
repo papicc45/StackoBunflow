@@ -1,4 +1,4 @@
-<img src="https://github.com/kdt-8-4/Weatherfit_Backend/assets/118866032/b7b6a7cd-87a5-42cb-aea0-f33d813fdce7">
+
 
 ## 프로젝트 URL
 <p>http://13.124.203.107</p>
@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"> 
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white">
   <img src="https://img.shields.io/badge/Axios-5A29E4?stype=flat&logo=axios&logoColor=white">
-  <img src="https://img.shields.io/badge/Styled-Components-DB7093?stype=flat&logo=Styled-Components&logoColor=white">
+  <img src="https://img.shields.io/badge/Styled-Components-DB7093?&stype=flat&logo=Styled-Components&logoColor=white">
   DB7093
   <br/>
   
