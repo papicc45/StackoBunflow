@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"> 
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white">
   <img src="https://img.shields.io/badge/Axios-5A29E4?stype=flat&logo=axios&logoColor=white">
-  <img src="https://img.shields.io/badge/Styled-Components-DB7093?&stype=flat&logo=Styled-Components&logoColor=white">
+  <img src="https://img.shields.io/badge/StyledComponents-DB7093?&stype=flat&logo=styledcomponents&logoColor=white">
   DB7093
   <br/>
   
