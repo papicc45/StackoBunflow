@@ -17,7 +17,6 @@
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white">
   <img src="https://img.shields.io/badge/Axios-5A29E4?stype=flat&logo=axios&logoColor=white">
   <img src="https://img.shields.io/badge/StyledComponents-DB7093?&stype=flat&logo=styledcomponents&logoColor=white">
-  DB7093
   <br/>
   
   <h3><b>Backend</b></h3>
@@ -32,8 +31,6 @@
   <img src="https://img.shields.io/badge/AWS EC2-FF9900?&logo=amazon ec2&logoColor=white">
   <img src="https://img.shields.io/badge/AWS RDS-527FFF?&logo=amazonrds&logoColor=white">
   <img src="https://img.shields.io/badge/Ubuntu-E95420?&logo=ubuntu&logoColor=white">
-  <br/>
-
   <img src="https://img.shields.io/badge/Nginx-009639?&logo=nginx&logoColor=white">
   <img src="https://img.shields.io/badge/Git Action-2088FF?style=flat&logo=github actions&logoColor=white"> 
   <img src="https://img.shields.io/badge/WSL-1A285F?style=flat&logo=&logoColor=white">
