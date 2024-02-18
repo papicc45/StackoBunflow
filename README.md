@@ -20,7 +20,7 @@
   <br/>
   
   <h3><b>Backend</b></h3>
-  <img src="https://img.shields.io/badge/Typescript-F7DF1E?style=flat&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/Bun-FFDF6F?style=flat&logo=Bun&logoColor=white">
   <img src="https://img.shields.io/badge/Elysia-415454?style=flat&logo=&logoColor=white">
   <img src="https://img.shields.io/badge/MySQL-4479A1?&style=flat&logo=mysql&logoColor=white">
