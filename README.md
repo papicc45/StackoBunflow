@@ -13,14 +13,14 @@
 ## 기술스택
 <div align=center> 
   <h3><b>Frontend</b></h3>
-  <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"> 
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black"> 
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white">
   <img src="https://img.shields.io/badge/Axios-5A29E4?stype=flat&logo=axios&logoColor=white">
   <img src="https://img.shields.io/badge/StyledComponents-DB7093?&stype=flat&logo=styledcomponents&logoColor=white">
   <br/>
   
   <h3><b>Backend</b></h3>
-  <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white">
+  <img src="https://img.shields.io/badge/Typescript-F7DF1E?style=flat&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/Bun-FFDF6F?style=flat&logo=Bun&logoColor=white">
   <img src="https://img.shields.io/badge/Elysia-415454?style=flat&logo=&logoColor=white">
   <img src="https://img.shields.io/badge/MySQL-4479A1?&style=flat&logo=mysql&logoColor=white">
